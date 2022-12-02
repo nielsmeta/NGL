@@ -1,49 +1,61 @@
-#include "GLFW/glfw3.h"
+#include"App.h"
+#include"Log.h"
+using namespace NGL;
 
-class App
+App* App::Application;
+void App::InitApp(int w, int h)
 {
-public:
-	int width;
-	int height;
-	static void Launch()
+	width = w;
+	height = h;
+	if (!glfwInit())
 	{
-		App *app = new App();
-		app->InitApp(680, 540);
+		return;
 	}
+	window = glfwCreateWindow(680, 540, "NGL", nullptr, nullptr);
+	glfwMakeContextCurrent(window);
+	glfwShowWindow(window);
+	while (!glfwWindowShouldClose(window)) {
+		glClearColor(0, 1, 1, 0);
+		glClear(GL_COLOR_BUFFER_BIT);
 
-private:
-	GLFWwindow* window;
+		glBegin(GL_TRIANGLES);
+		glVertex2f(-0.5, -0.5);
+		glVertex2f(0.5, -0.5);
+		glVertex2f(0, 0.5);
+		glEnd();
 
-	void InitApp(int w, int h)
+		glfwSwapBuffers(window);
+		glfwPollEvents();
+	}
+}
+
+int App::GetScreenWidth()
+{
+	return width;
+}
+
+int App::GetScreenHeight()
+{
+	return height;
+}
+
+void App::Launch()
+{
+	App::Application = new App();
+	App::Application->InitApp(680, 540);
+}
+
+void App::Close()
+{
+	if (Application != nullptr)
 	{
-		width = w;
-		height = h;
-		if (!glfwInit())
-		{
-			return;
-		}
-		window = glfwCreateWindow(680, 540, "NGL", nullptr, nullptr);
-		glfwMakeContextCurrent(window);
-		glfwShowWindow(window);
-		while (!glfwWindowShouldClose(window)) {
-			glClearColor(0, 1, 1, 0);
-			glClear(GL_COLOR_BUFFER_BIT);
-
-			glBegin(GL_TRIANGLES);
-			glVertex2f(-0.5, -0.5);
-			glVertex2f(0.5, -0.5);
-			glVertex2f(0, 0.5);
-			glEnd();
-
-			glfwSwapBuffers(window);
-			glfwPollEvents();
-		}
+		delete Application;
+		Application = nullptr;
 	}
-	~App()
-	{
-		if (window != nullptr)
-		{
-			delete window;
-		}
-	}
-};
+	Log::Debug<const char*>("Close Application.");
+}
+
+App::~App()
+{
+	Log::Debug<const char*>("Exit Application.");
+}
