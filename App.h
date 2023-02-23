@@ -1,4 +1,5 @@
 #pragma once
+#include "GL/glew.h"
 #include "GLFW/glfw3.h"
 namespace NGL
 {
@@ -10,6 +11,7 @@ namespace NGL
 		static void Close();
 		int GetScreenWidth();
 		int GetScreenHeight();
+		void Draw();
 
 	private:
 		GLFWwindow* window;

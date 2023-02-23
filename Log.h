@@ -17,25 +17,25 @@ namespace NGL
 	template<typename T>
 	void Log::Debug(T msg)
 	{
-		std::cout << msg << std::endl;
+		std::cout<< " NGL DEBUG::\t " << msg << std::endl;
 	}
 
 	template<typename T>
 	void Log::Info(T msg)
 	{
-
+		std::cout << " NGL INFO::\t " << msg << std::endl;
 	}
 
 	template<typename T>
 	void Log::Warning(T msg)
 	{
-
+		std::cout << " NGL WARNING::\t " << msg << std::endl;
 	}
 
 	template<typename T>
 	void Log::Error(T msg)
 	{
-
+		std::cout << " NGL ERROR::\t " << msg << std::endl;
 	}
 
 }
