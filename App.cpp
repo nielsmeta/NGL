@@ -1,6 +1,5 @@
 #include"App.h"
 #include"Log.h"
-#include"head.h"
 
 using namespace NGL;
 
