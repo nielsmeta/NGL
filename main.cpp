@@ -10,3 +10,5 @@ int main()
 	Log::Debug<const char*>("Exit Main.");
 	return 0;
 }
+
+

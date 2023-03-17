@@ -6,11 +6,21 @@ using namespace NGL;
 
 const std::string vertexShaderSource = "";
 
+
 App* App::Application;
+
+App* App::GetApp()
+{
+	return App::Application;
+}
+
+void  FrameBufferResizeCallback(GLFWwindow* window, int width, int height)
+{
+	App::GetApp()->OnResize(window, width, height);
+}
+
 void App::InitApp(int w, int h)
 {
-	Vector3 t = Vector3(2, 10,20);
-	t.Info();
 	width = w;
 	height = h;
 	if (!glfwInit())
@@ -21,38 +31,31 @@ void App::InitApp(int w, int h)
 	glfwMakeContextCurrent(window);
 	glfwShowWindow(window);
 
+	glViewport(0, 0, width, height);
+
 	unsigned int glew_status = glewInit();
 	if (glew_status != GLEW_OK)
 	{
 		Log::Debug<const char*>("Error");
+		glfwTerminate();
+		return;
 	}
 
-	float positions[6] = { -0.5, -0.5 ,
-							0.5, -0.5,
-							0.0f, 0.5 };
-
-	unsigned int buffer;
-	glGenBuffers(1, &buffer);
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW);
-
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), 0);
-	glEnableVertexAttribArray(0);
-	//glShaderSource(GL_VERTEX_SHADER,);
+	glfwSetFramebufferSizeCallback(window, FrameBufferResizeCallback);
 
 	while (!glfwWindowShouldClose(window)) {
 		glClearColor(0, 1, 1, 0);
 		glClear(GL_COLOR_BUFFER_BIT);
-
-		glDrawArrays(GL_TRIANGLES, 0, 3);
-		this->Draw();
-
+		this->Render();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
+
+	glfwDestroyWindow(window);
+	glfwTerminate();
 }
 
-void App::Draw()
+void App::Render()
 {
 
 }
@@ -71,6 +74,14 @@ void App::Launch()
 {
 	App::Application = new App();
 	App::Application->InitApp(680, 540);
+}
+
+void App::OnResize(GLFWwindow* window, int width, int height)
+{
+	this->width = width;
+	this->height = height;
+	std::cout << "width: " << width << "	height:" << height << std::endl;
+	glViewport(0, 0, width, height);
 }
 
 void App::Close()

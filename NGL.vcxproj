@@ -149,16 +149,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="Base\Vector2.cpp" />
-    <ClCompile Include="Base\Vector3.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
-    <ClInclude Include="head.h" />
-    <ClInclude Include="Base\Vector2.h" />
-    <ClInclude Include="Base\Vector3.h" />
+    <ClInclude Include="Base\vector.h" />
     <ClInclude Include="Log.h" />
+    <ClInclude Include="Base\primitive.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

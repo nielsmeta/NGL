@@ -21,12 +21,6 @@
     <ClCompile Include="App.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Base\Vector2.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Base\Vector3.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h">
@@ -35,13 +29,10 @@
     <ClInclude Include="Log.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Base\Vector2.h">
+    <ClInclude Include="Base\primitive.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Base\Vector3.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="head.h">
+    <ClInclude Include="Base\vector.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
