@@ -1,6 +1,5 @@
 #include"App.h"
 #include"Log.h"
-
 using namespace NGL;
 
 const std::string vertexShaderSource = "";
@@ -18,10 +17,23 @@ void  FrameBufferResizeCallback(GLFWwindow* window, int width, int height)
 	App::GetApp()->OnResize(window, width, height);
 }
 
+void ProcessInput(GLFWwindow* window)
+{
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GL_TRUE)
+	{
+		Log::Info("press escape down");
+		glfwSetWindowShouldClose(window, 1);
+	}
+}
+
 void App::InitApp(int w, int h)
 {
 	width = w;
 	height = h;
+	printf("OpenGL Version: %s\n", glGetString(GL_VERSION));
+	glfwWindowHint(GL_MAJOR_VERSION, 3);
+	glfwWindowHint(GL_MINOR_VERSION, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	if (!glfwInit())
 	{
 		return;
@@ -43,6 +55,7 @@ void App::InitApp(int w, int h)
 	glfwSetFramebufferSizeCallback(window, FrameBufferResizeCallback);
 
 	while (!glfwWindowShouldClose(window)) {
+		ProcessInput(window);
 		glClearColor(0, 1, 1, 0);
 		glClear(GL_COLOR_BUFFER_BIT);
 		this->Render();
@@ -71,6 +84,7 @@ int App::GetScreenHeight()
 
 void App::Launch()
 {
+	if (App::Application != nullptr)return;
 	App::Application = new App();
 	App::Application->InitApp(680, 540);
 }

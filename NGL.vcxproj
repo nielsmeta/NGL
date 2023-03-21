@@ -155,6 +155,7 @@
     <ClInclude Include="App.h" />
     <ClInclude Include="Base\matrix.h" />
     <ClInclude Include="Base\vector.h" />
+    <ClInclude Include="Base\head.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="Base\primitive.h" />
   </ItemGroup>

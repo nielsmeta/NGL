@@ -1,3 +1,4 @@
+#pragma once
 #ifndef NGL_LOG_H
 #define NGL_LOG_H
 #include<iostream>
