@@ -78,6 +78,26 @@ namespace NGL
 		return vector3<T>(b.x + a.x, b.y + a.y, b.z + a.z);
 	}
 
+	vector3f operator + (const vector3f& a, const vector3i& b)
+	{
+		return vector3f(b.x + a.x, b.y + a.y, b.z + a.z);
+	}
+
+	vector3f operator + (const vector3i& a, const vector3f& b)
+	{
+		return vector3f(b.x + a.x, b.y + a.y, b.z + a.z);
+	}
+
+	vector2f operator + (const vector2f& a, const vector2i& b)
+	{
+		return vector2f(b.x + a.x, b.y + a.y);
+	}
+
+	vector2f operator + (const vector2i& a, const vector2f& b)
+	{
+		return vector2f(b.x + a.x, b.y + a.y);
+	}
+
 	template<typename T> vector2<T>  operator-(const vector2<T>& a, const vector2<T>& b)
 	{
 		return vector2<T>(a.x - b.x, a.y - b.y);
@@ -88,14 +108,14 @@ namespace NGL
 		return vector3<T>(a.x - b.x, a.y - b.y, a.z - b.z);
 	}
 
-	template<typename T> vector2<T>  operator*(const vector2<T>& a, float s)
+	template<typename T> vector2f  operator*(const vector2<T>& a, float s)
 	{
-		return vector2<T>(a.x * s, a.y * s);
+		return vector2f(a.x * s, a.y * s);
 	}
 
-	template<typename T> vector3<T>  operator*(const vector3<T>& a, float s)
+	template<typename T> vector3f  operator*(const vector3<T>& a, float s)
 	{
-		return vector3<T>(a.x * s, a.y * s, a.z * s);
+		return vector3f(a.x * s, a.y * s, a.z * s);
 	}
 
 	///////////////////////////////////////////////////////
@@ -210,26 +230,26 @@ namespace NGL
 	//////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////
 
-	template<typename T> vector2<T> project(const vector2<T>& length, const vector2<T>& dir)
+	template<typename T> vector2f project(const vector2<T>& length, const vector2<T>& dir)
 	{
 		float m = dot(length, dir);
 		float n = dot(dir, dir);
 		return dir * (m / n);
 	}
 
-	template<typename T> vector3<T> project(const vector3<T>& length, const vector3<T>& dir)
+	template<typename T> vector3f project(const vector3<T>& length, const vector3<T>& dir)
 	{
 		float m = dot(length, dir);
 		float n = dot(dir, dir);
 		return dir * (m / n);
 	}
 
-	template<typename T> vector2<T> perpendicular(const vector2<T>& length, const vector2<T>& dir)
+	template<typename T> vector2f perpendicular(const vector2<T>& length, const vector2<T>& dir)
 	{
 		return length - project(length, dir);
 	}
 
-	template<typename T> vector3<T> perpendicular(const vector3<T>& length, const vector3<T>& dir)
+	template<typename T> vector3f perpendicular(const vector3<T>& length, const vector3<T>& dir)
 	{
 		return length - project(length, dir);
 	}
@@ -239,12 +259,12 @@ namespace NGL
 	//////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////
 
-	template<typename T> vector2<T> reflect(const vector2<T>& a, const vector2<T>& n)
+	template<typename T> vector2f reflect(const vector2<T>& a, const vector2<T>& n)
 	{
 		return a - 2 * project(a, n);
 	}
 
-	template<typename T> vector3<T> reflect(const vector3<T>& a, const vector3<T>& n)
+	template<typename T> vector3f reflect(const vector3<T>& a, const vector3<T>& n)
 	{
 		return a - 2 * project(a, n);
 	}
