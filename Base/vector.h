@@ -1,6 +1,4 @@
 #pragma once
-#ifndef __VECTOR__H
-#define __VECTOR__H
 #include<iostream>
 #include<cmath>
 #include<cfloat>
@@ -275,6 +273,3 @@ namespace NGL
 	//////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////
 }
-
-
-#endif // !__VECTOR__H

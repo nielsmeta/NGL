@@ -1,6 +1,4 @@
 #pragma once
-#ifndef NGL_LOG_H
-#define NGL_LOG_H
 #include<iostream>
 
 namespace NGL
@@ -40,8 +38,4 @@ namespace NGL
 	}
 
 }
-
-
-
-#endif // !NGL_LOG_H
 
