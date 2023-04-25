@@ -54,6 +54,8 @@ void App::InitApp(int w, int h)
 
 	glfwSetFramebufferSizeCallback(window, FrameBufferResizeCallback);
 
+	_scene.Init();
+
 	while (!glfwWindowShouldClose(window)) {
 		ProcessInput(window);
 		glClearColor(0, 1, 1, 0);
@@ -69,7 +71,7 @@ void App::InitApp(int w, int h)
 
 void App::Render()
 {
-
+	_scene.OnRender();
 }
 
 int App::GetScreenWidth()

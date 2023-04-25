@@ -1,5 +1,6 @@
 #pragma once
 #include"Base/head.h"
+#include"Scene.h"
 namespace NGL
 {
 	class App
@@ -22,7 +23,7 @@ namespace NGL
 		unsigned int shaderProgram;
 		static App* Application;
 		void InitApp(int w, int h);
-		
+		Scene _scene;
 		~App();
 	};
 }

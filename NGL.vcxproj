@@ -117,7 +117,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)\Deps\GLFW\include;$(SolutionDir)\Deps\GLEW\include</AdditionalIncludeDirectories>
     </ClCompile>
@@ -156,8 +156,17 @@
     <ClInclude Include="Base\matrix.h" />
     <ClInclude Include="Base\vector.h" />
     <ClInclude Include="Base\head.h" />
+    <ClInclude Include="FileHelper.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="Base\primitive.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="primitive_model.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="Shader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\testVert.shader" />
+    <None Include="Shaders\testFrag.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
