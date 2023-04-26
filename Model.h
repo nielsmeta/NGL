@@ -1,17 +1,14 @@
 #pragma once
-#include"Base/head.h"
-struct Model
+
+class Model
 {
+protected:
 	unsigned int VBO;
 	unsigned int VAO;
 	unsigned int EBO;
 
-	virtual void Init()
-	{
+public:
 
-	}
-	virtual void OnRender()
-	{
-
-	}
+	virtual void Init();
+	virtual void OnRender();
 };

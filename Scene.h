@@ -1,45 +1,24 @@
 #pragma once
-#include"Base/head.h"
 #include<iostream>
 #include<vector>
-#include"primitive_model.h"
+
+#include"Model.h"
+
 using namespace std;
-struct Scene
+
+class Scene
 {
 private:
+
 	vector<Model*> _models;
 
 public:
 
-	Model AddModel(Model* model)
-	{
-		_models.push_back(model);
-		return *model;
-	}
+	Model AddModel(Model* model);
 
-	void Init()
-	{
-		AddModel(new Triangle());
-		InitModels();
-	}
+	void Init();
 
-	void InitModels()
-	{
-		int count = _models.size();
-		for (int i = 0; i < count; i++)
-		{
-			auto model = _models.at(i);
-			model->Init();
-		}
-	}
+	void InitModels();
 
-	void OnRender()
-	{
-		int count = _models.size();
-		for (int i = 0; i < count; i++)
-		{
-			auto model = _models.at(i);
-			model->OnRender();
-		}
-	}
+	void OnRender();
 };
