@@ -156,6 +156,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Base\vector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />

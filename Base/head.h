@@ -4,5 +4,7 @@
 #include <string>
 #include<iostream>
 
+#include"vector.h"
+
 
 
