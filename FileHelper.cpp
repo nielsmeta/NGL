@@ -17,9 +17,15 @@ string FileHelper::ReadFileTxt(const char* filePath)
 	return buffer;
 }
 
-unsigned char* FileHelper::LoadImageFile(const char* filePath, int& width, int& height, int& channel)
+unsigned char* FileHelper::LoadImageFile(const char* filePath, int& width, int& height, int& channel,bool needFlipY)
 {
-	return  stbi_load(filePath, &width, &height, &channel, 0);
+	if (needFlipY)
+	{
+		stbi_set_flip_vertically_on_load(true);
+	}
+	auto data = stbi_load(filePath, &width, &height, &channel, 0);
+	stbi_set_flip_vertically_on_load(false);
+	return  data;
 }
 
 void FileHelper::FreeImageData(unsigned char* data)

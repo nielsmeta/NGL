@@ -8,7 +8,12 @@ private:
 	unsigned int textureId;
 public :
 
-	void LoadTexture(const char* texturePath);
+	Texture()
+	{
+
+	}
+
+	void LoadTexture(const char* texturePath, GLint imageFormat,bool needYFlip = false);
 
 	int GetWidth();
 
