@@ -6,6 +6,8 @@ using namespace std;
 
 #define RAD2DEG(x) (x*57.295754f)
 #define DEG2RAD(x) (x*0.0174533f)
+#define CMP(x,y)  \
+	(fabsf((x) - (y)) <= FLT_EPSILON * fmaxf(1.0f, fmaxf(fabsf(x),fabsf(y))))
 
 struct vector2
 {
@@ -22,6 +24,7 @@ struct vector2
 	{
 		return arrays[i];
 	}
+
 
 	vector2();
 	vector2(float x, float y);
@@ -60,8 +63,8 @@ vector3 operator*(const vector3& a, float s);
 vector2 operator*(float s,const vector2& a);
 vector3 operator*(float s,const vector3& a);
 
-ostream& operator<< (ostream& o, vector2 a);
-ostream& operator<< (ostream& o, vector3 a);
+ostream& operator<< (ostream& o, const vector2& a);
+ostream& operator<< (ostream& o, const vector3& a);
 
 float dot(const vector2& a, const vector2& b);
 

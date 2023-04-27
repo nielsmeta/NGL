@@ -60,7 +60,7 @@ vector3 operator*(float s, const vector3& a)
 {
 	return a * s;
 }
-
+ 
 ostream& operator<< (ostream& o, const vector2& a)
 {
 	o << a.x << ',' << a.y << endl;

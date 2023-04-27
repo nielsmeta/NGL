@@ -149,6 +149,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="Base\matrix.cpp" />
     <ClCompile Include="FileHelper.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model.cpp" />
