@@ -1,5 +1,12 @@
 #include"primitive_model.h"
+#include "App.h"
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+using namespace NGL;
 
+ostream& operator<<(ostream& o, glm::mat4 mat);
 Triangle::Triangle()
 {
 	_shader.InitShader("./Shaders/testVert.shader", "./Shaders/testFrag.shader");
@@ -44,6 +51,7 @@ void Triangle::Init()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
+
 void Triangle::OnRender()
 {
 	_shader.Use();
@@ -61,5 +69,19 @@ void Triangle::OnRender()
 	float v = sin(time) / 2 + 0.5f;
 	float t = cos(time) / 2 + 0.5f;
 	_shader.SetUniform4f("myColor", t, v, 0.0f, 1.0f);*/
+
+	/*matrix4x4 model = xRotation(-55);
+	_shader.SetUniformMatrix4fv("model", model.toArray);*/
+
+	matrix4x4 mat = xRotation(-55);
+	matrix4x4 mat1 = translate(0, 0, -3.0f);
+	matrix4x4 mat2 = glPerspective(45, (float)800 / (float)600, 0.1f, 100.0f);
+
+	_shader.SetUniformMatrix4fv("projection",  mat2.toArray);
+	_shader.SetUniformMatrix4fv("model", mat.toArray);
+	_shader.SetUniformMatrix4fv("view", mat1.toArray);
+	//_shader.SetUniformMatrix4fv("projection",mat2.toArray);
+
 	glBindVertexArray(0);
 }
+

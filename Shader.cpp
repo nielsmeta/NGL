@@ -98,3 +98,8 @@ void Shader::SetUniform4f(const char* name, float a, float b, float c, float d)
 {
 	SetUniform4f(GetUniformIdByName(name), a, b, c, d);
 }
+
+void Shader::SetUniformMatrix4fv(const char* name, float* value, int mCount, bool needTranspose)
+{
+	glUniformMatrix4fv(GetUniformIdByName(name), mCount, needTranspose, value);
+}

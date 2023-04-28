@@ -136,7 +136,9 @@ matrix4x4 ortho(float left, float right, float top, float bottom, float near, fl
 /// <param name="near"></param>
 /// <param name="far"></param>
 /// <returns></returns>
-matrix4x4 project(float fov, float aspect, float near, float far);
+matrix4x4 perspective(float fov, float aspect, float near, float far);
+
+ostream& operator<<(ostream& o, const matrix4x4 mat);
 
 void transpose(const float* src, float* dest, int srcRow, int srcCol);
 matrix2x2 transpose(const matrix2x2& mat2);
@@ -189,6 +191,8 @@ matrix2x2 adjugate(const matrix2x2& mat);
 /// <param name="mat"></param>
 /// <returns></returns>
 matrix2x2 inverse(const matrix2x2& mat);
+
+matrix2x2 rotation(float angle);
 
 ostream& operator<<(ostream& o, const matrix2x2 mat);
 
@@ -387,12 +391,20 @@ matrix3x3 yRotation3x3(float angle);
 /// <returns></returns>
 matrix3x3 xRotation3x3(float angle);
 
+/// <summary>
+/// first rotate around z axis, then x axis, finally y axis
+/// </summary>
+/// <param name="roll"></param>
+/// <param name="pitch"></param>
+/// <param name="yaw"></param>
+/// <returns></returns>
 matrix4x4 rotation(float roll, float pitch, float yaw);
 
-vector3 mulPoint(const vector3& p, const matrix4x4& mat);
+vector3 mulPoint(const matrix4x4& mat, const vector3& p);
 
-vector3 mulVector(const vector3& v, const matrix4x4& mat);
+vector3 mulVector(const matrix4x4& mat, const vector3& v);
 
+//先缩放、再旋转、最后平移
 matrix4x4 transform(const vector3& scale, const vector3& rotation, const vector3& translate);
 
 /// <summary>
@@ -402,4 +414,31 @@ matrix4x4 transform(const vector3& scale, const vector3& rotation, const vector3
 /// <param name="target"></param>
 /// <param name="up"></param>
 /// <returns></returns>
-matrix4x4 lookAt(vector3& position, const vector3& target, const vector3& up);
+matrix4x4 lookAt(const vector3& position, const vector3& target, const vector3& up);
+
+
+/// <summary>
+/// opengl 正交投影矩阵
+/// near is less than far
+/// both near and far are positive value
+/// </summary>
+/// <param name="left"></param>
+/// <param name="right"></param>
+/// <param name="top"></param>
+/// <param name="bottom"></param>
+/// <param name=""></param>
+/// <param name=""></param>
+/// <returns></returns>
+matrix4x4 glOrtho(float left, float right, float top, float bottom, float near, float far);
+
+/// <summary>
+/// opengl 透视投影矩阵
+/// near is less than far value
+/// both near and far are positive value
+/// </summary>
+/// <param name="fov"></param>
+/// <param name="aspect"></param>
+/// <param name=""></param>
+/// <param name=""></param>
+/// <returns></returns>
+matrix4x4 glPerspective(float fov, float aspect, float near, float far);

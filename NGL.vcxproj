@@ -119,7 +119,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Deps\GLFW\include;$(SolutionDir)\Deps\GLEW\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Deps;$(SolutionDir)\Deps\GLFW\include;$(SolutionDir)\Deps\GLEW\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -172,6 +172,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Base\stb_image.h" />
+    <ClInclude Include="TestMath.h" />
     <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>

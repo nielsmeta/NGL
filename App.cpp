@@ -1,5 +1,6 @@
 #include"App.h"
 #include"Log.h"
+#include"TestMath.h"
 using namespace NGL;
 
 const std::string vertexShaderSource = "";
@@ -28,6 +29,8 @@ void ProcessInput(GLFWwindow* window)
 
 void App::InitApp(int w, int h)
 {
+	TestMath ts;
+	ts.StartTest();
 	width = w;
 	height = h;
 	printf("OpenGL Version: %s\n", glGetString(GL_VERSION));
@@ -88,7 +91,7 @@ void App::Launch()
 {
 	if (App::Application != nullptr)return;
 	App::Application = new App();
-	App::Application->InitApp(680, 540);
+	App::Application->InitApp(800, 600);
 }
 
 void App::OnResize(GLFWwindow* window, int width, int height)

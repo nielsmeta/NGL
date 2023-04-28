@@ -121,11 +121,19 @@ matrix2x2 inverse(const matrix2x2& mat)
 	return adjugate(mat) * (1.0f / det);
 }
 
+matrix2x2 rotation(float angle)
+{
+	angle = DEG2RAD(angle);
+	return matrix2x2(cosf(angle), -sinf(angle),
+		sinf(angle), cosf(angle));
+}
+
+
 ostream& operator<<(ostream& o, const matrix2x2 mat)
 {
 	o << endl;
-	o << "	" << mat._11 << " " << mat._12 << '\n'
-		<< "	" << mat._21 << " " << mat._22;
+	o << "matrix:	" << mat._11 << " " << mat._21 << '\n'
+		<< "	" << mat._12 << " " << mat._22;
 	o << endl;
 	return o;
 }
@@ -248,9 +256,9 @@ matrix3x3 inverse(const matrix3x3& mat)
 ostream& operator<<(ostream& o, const matrix3x3 mat)
 {
 	o << endl;
-	o << "	" << mat._11 << " " << mat._12 << " " << mat._13
-		<< "	" << mat._21 << " " << mat._22 << " " << mat._23
-		<< "	" << mat._31 << " " << mat._32 << " " << mat._33 << endl;
+	o << "	" << mat._11 << " " << mat._21 << " " << mat._31
+		<< "	" << mat._12 << " " << mat._22 << " " << mat._32
+		<< "	" << mat._13 << " " << mat._23 << " " << mat._33 << endl;
 	return o;
 }
 
@@ -458,52 +466,53 @@ matrix3x3 xRotation3x3(float angle)
 
 matrix4x4 rotation(float roll, float pitch, float yaw)
 {
-	return zRotation(roll) * xRotation(pitch) * yRotation(yaw);
+	return   yRotation(yaw)* xRotation(pitch) * zRotation(roll);
 }
 
-vector3 mulPoint(const vector3& p, const matrix4x4& mat)
+vector3 mulPoint(const matrix4x4& mat,const vector3& p)
 {
 	vector3 re;
-	re.x = p.x * mat._11 + p.y * mat._12 + p.z * mat._13 + 1.0f * mat._14;
-	re.y = p.x * mat._21 + p.y * mat._22 + p.z * mat._23 + 1.0f * mat._24;
-	re.z = p.x * mat._31 + p.y * mat._32 + p.z * mat._33 + 1.0f * mat._34;
+	re.x = p.x * mat._11 + p.y * mat._21 + p.z * mat._31 + 1.0f * mat._41;
+	re.y = p.x * mat._12 + p.y * mat._22 + p.z * mat._32 + 1.0f * mat._42;
+	re.z = p.x * mat._13 + p.y * mat._23 + p.z * mat._33 + 1.0f * mat._43;
 	return re;
 }
 
-vector3 mulVector(const vector3& v, const matrix4x4& mat)
+vector3 mulVector(const matrix4x4& mat,const vector3& v)
 {
 	vector3 re;
-	re.x = v.x * mat._11 + v.y * mat._12 + v.z * mat._13;
-	re.y = v.x * mat._21 + v.y * mat._22 + v.z * mat._23;
-	re.z = v.x * mat._31 + v.y * mat._32 + v.z * mat._33;
+	re.x = v.x * mat._11 + v.y * mat._21 + v.z * mat._31;
+	re.y = v.x * mat._12 + v.y * mat._22 + v.z * mat._32;
+	re.z = v.x * mat._13 + v.y * mat._23 + v.z * mat._33;
 	return re;
 }
 
 matrix4x4 transform(const vector3& s, const vector3& r, const vector3& t)
 {
-	//先缩放、再旋转、最后平移
-	return   translate(t) * scale(s) * rotation(r.x, r.y, r.z);
+	return  translate(t)* rotation(r.x, r.y, r.z) * scale(s);
 }
 
-matrix4x4 lookAt(vector3& position, const vector3& target, const vector3& up)
+matrix4x4 lookAt(const vector3& position, const vector3& target, const vector3& up)
 {
 	vector3 forward = normalize(target - position);
 	vector3 right = normalize(cross(up, forward));
 	vector3 newUp = cross(forward, right);
-	float _14 = right.x * position.x + right.y * position.y + right.z * position.z;
-	float _24 = newUp.x * position.x + newUp.y * position.y + newUp.z * position.z;
-	float _34 = forward.x * position.x + forward.y * position.y + forward.z * position.z;
+	float _41 = right.x * position.x + right.y * position.y + right.z * position.z;
+	float _42 = newUp.x * position.x + newUp.y * position.y + newUp.z * position.z;
+	float _43 = forward.x * position.x + forward.y * position.y + forward.z * position.z;
 	return matrix4x4(
-		right.x, right.y, right.z, -_14,
-		newUp.x, newUp.y, newUp.z, -_24,
-		forward.x, forward.y, forward.z, -_34,
-		0, 0, 0, 1.0f
+		right.x, newUp.x, forward.x, 0,
+		right.y, newUp.y, forward.y, 0,
+		right.z, newUp.z, forward.z, 0,
+		-_41, -_42, -_43, 1.0f
 	);
 }
 
 
 /// <summary>
 /// 正交变换矩阵
+/// near is more than far,
+/// both near and far are negative value
 /// </summary>
 /// <param name="left"></param>
 /// <param name="right"></param>
@@ -518,9 +527,9 @@ matrix4x4 ortho(float left, float right, float top, float bottom, float near, fl
 	result._11 = 2.0f / (right - left);
 	result._22 = 2.0f / (top - bottom);
 	result._33 = 2.0f / (near - far);
-	result._14 = -(left + right) / 2;
-	result._24 = -(top + bottom) / 2;
-	result._34 = -(near + far) / 2;
+	result._41 = -(left + right) / (right - left);
+	result._42 = -(top + bottom) / (top - bottom);
+	result._43 = -(near + far) / (near - far);
 	return result;
 }
 
@@ -528,6 +537,8 @@ matrix4x4 ortho(float left, float right, float top, float bottom, float near, fl
 
 /// <summary>
 /// 透视投影矩阵
+/// near is more than far,
+/// both near and far  are negative value
 /// </summary>
 /// <param name="fov"></param>
 /// <param name="aspect"></param>
@@ -537,12 +548,49 @@ matrix4x4 ortho(float left, float right, float top, float bottom, float near, fl
 matrix4x4 perspective(float fov, float aspect, float near, float far)
 {
 	float tanHalfRad = tanf(DEG2RAD(fov * 0.5f));
-	float top = (far - near) * tanHalfRad;
+	float top = near * tanHalfRad;
 	float bottom = -top;
 	float right = top * aspect;
 	float left = - right;
 	matrix4x4 re;
-	re._11 = 2 * near * (right - left);
-	re._13 = (left + right);
+	re._11 = 2 * near / (right - left);
+	re._31 = 0;
+	re._22 = 2 * near / (top - bottom);
+	re._32 = 0;
+	re._33 = (near + far) / (near - far);
+	re._43 = -2 * near * far / (near - far);
+	re._34 = 1;
+	re._44 = 0;
 	return re;
+}
+
+
+
+matrix4x4 glOrtho(float left, float right, float top, float bottom, float near, float far)
+{
+	matrix4x4 re = ortho(left, right, top, bottom, -near, -far);
+	matrix4x4 mat;
+	mat._33 = -1;
+	return mul(mat, re);
+}
+
+
+matrix4x4 glPerspective(float fov, float aspect, float near, float far)
+{
+	matrix4x4 re = perspective(fov, aspect, -near, -far);
+	matrix4x4 mat;
+	mat._44 = -1; //make filp all points  bea
+	re = mul(re, mat);
+	return re;
+}
+
+ostream& operator<<(ostream& o, const matrix4x4 mat)
+{
+	o << endl;
+	o << "matrix: " << endl
+		<< mat._11 << " " << mat._21 << " " << mat._31 << " " << mat._41 << endl
+		<< mat._12 << " " << mat._22 << " " << mat._32 << " " << mat._42 << endl
+		<< mat._13 << " " << mat._23 << " " << mat._33 << " " << mat._43 << endl
+		<< mat._14 << " " << mat._24 << " " << mat._34 << " " << mat._44 << endl;
+	return o;
 }

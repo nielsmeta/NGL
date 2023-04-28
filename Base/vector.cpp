@@ -2,7 +2,7 @@
 
 
 
-vector2::vector2() :x(0),y(0)
+vector2::vector2() :x(0), y(0)
 {
 
 }
@@ -12,12 +12,12 @@ vector2::vector2(float x, float y) : x(x), y(y)
 
 }
 
-vector3::vector3() : x(0), y(0),z(0)
+vector3::vector3() : x(0), y(0), z(0)
 {
 
 }
 
-vector3::vector3(float x, float y,float z) : x(x), y(y),z(z)
+vector3::vector3(float x, float y, float z) : x(x), y(y), z(z)
 {
 
 }
@@ -60,7 +60,7 @@ vector3 operator*(float s, const vector3& a)
 {
 	return a * s;
 }
- 
+
 ostream& operator<< (ostream& o, const vector2& a)
 {
 	o << a.x << ',' << a.y << endl;
@@ -80,7 +80,7 @@ float dot(const vector2& a, const vector2& b)
 
 float dot(const vector3& a, const vector3& b)
 {
-	return a.x * b.x + a.y * b.y + a.z* b.z;
+	return a.x * b.x + a.y * b.y + a.z * b.z;
 }
 
 float magnitude(const vector2& a)
@@ -110,7 +110,7 @@ vector2 normalize(const vector2& a)
 
 void normalized(vector2& a)
 {
-	float l = (1.0f*magnitude(a));
+	float l = (1.0f * magnitude(a));
 	a.x *= l;
 	a.y *= l;
 }
@@ -132,7 +132,7 @@ vector3 cross(const vector3& a, const vector3& b)
 {
 	vector3 re;
 	re.x = a.y * b.z - a.z * b.y;
-	re.y = b.z * a.x - a.z * b.x;
+	re.y = a.z * b.x - b.z * a.x;
 	re.z = a.x * b.y - a.y * b.x;
 	return re;
 }
