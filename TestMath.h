@@ -134,7 +134,7 @@ struct TestMath
 		std::cout << projection;
 		std::cout << p;*/
 	
-		matrix4x4 mat1;
+		/*matrix4x4 mat1;
 		mat1._33 = 1;
 		mat1._34 = 5;
 		mat1._43 = 4;
@@ -143,6 +143,11 @@ struct TestMath
 		std::cout << mat2;
 		std::cout << mat1;
 		
-		std::cout<<mul(mat1,mat2);
+		std::cout<<mul(mat1,mat2);*/
+
+		auto view = glLookAt(vector3(0, 0, 10), vector3(0, 0, 0), vector3(0, 1, 0));
+		std::cout << view;
+		auto t = glm::lookAt(glm::vec3(0, 0, 10), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+		std::cout << t;
 	}
 };

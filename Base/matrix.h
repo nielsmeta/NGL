@@ -415,6 +415,7 @@ matrix4x4 transform(const vector3& scale, const vector3& rotation, const vector3
 /// <param name="up"></param>
 /// <returns></returns>
 matrix4x4 lookAt(const vector3& position, const vector3& target, const vector3& up);
+matrix4x4 glLookAt(const vector3& position, const vector3& target, const vector3& up);
 
 
 /// <summary>

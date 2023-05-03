@@ -508,6 +508,11 @@ matrix4x4 lookAt(const vector3& position, const vector3& target, const vector3& 
 	);
 }
 
+matrix4x4 glLookAt(const vector3& position, const vector3& target, const vector3& up)
+{
+	return lookAt(position,target,up);
+}
+
 
 /// <summary>
 /// Õý½»±ä»»¾ØÕó

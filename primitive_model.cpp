@@ -39,16 +39,17 @@ void Triangle::Init()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, false, 8 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, false, 5 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	glVertexAttribPointer(1, 3, GL_FLOAT, false, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(1, 3, GL_FLOAT, false, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
-	glVertexAttribPointer(2, 2, GL_FLOAT, false, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	glEnableVertexAttribArray(2);
+	/*glVertexAttribPointer(2, 2, GL_FLOAT, false, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glEnableVertexAttribArray(2);*/
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glEnable(GL_DEPTH_TEST);
 }
 
 
@@ -64,7 +65,20 @@ void Triangle::OnRender()
 	
 	glBindVertexArray(VAO);
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	for (int i = 0; i < 10; i++)
+	{
+		float angle = 20.0f * i;
+		matrix4x4 model = translate(cubePositions[i]);
+
+		model = rotation(angle * 0.5, angle * 1.0f, angle * 0.3) * model;
+
+		_shader.SetUniformMatrix4fv("model", model.toArray);
+
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+	}
+
 	/*float time = glfwGetTime();
 	float v = sin(time) / 2 + 0.5f;
 	float t = cos(time) / 2 + 0.5f;
@@ -73,13 +87,23 @@ void Triangle::OnRender()
 	/*matrix4x4 model = xRotation(-55);
 	_shader.SetUniformMatrix4fv("model", model.toArray);*/
 
-	matrix4x4 mat = xRotation(-55);
-	matrix4x4 mat1 = translate(0, 0, -3.0f);
-	matrix4x4 mat2 = glPerspective(45, (float)800 / (float)600, 0.1f, 100.0f);
+	//matrix4x4 mat = xRotation(50 *glfwGetTime());
+	matrix4x4 view = translate(0, 0, -3.0f);
+	matrix4x4 projection = glPerspective(45, (float)800 / (float)600, 0.1f, 100.0f);
 
-	_shader.SetUniformMatrix4fv("projection",  mat2.toArray);
-	_shader.SetUniformMatrix4fv("model", mat.toArray);
-	_shader.SetUniformMatrix4fv("view", mat1.toArray);
+	_shader.SetUniformMatrix4fv("projection",  projection.toArray);
+
+
+	float radius = 10.0f;
+
+	float x = sinf(glfwGetTime()) * radius;
+	float z = cosf(glfwGetTime()) * radius;
+
+	view = lookAt(vector3(0, 1, 10), vector3(0, 0, 0), vector3(0, 1, 0));
+
+	glm::mat4 t = glm::lookAt(glm::vec3(0, 1, 10), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	
+	_shader.SetUniformMatrix4fv("view", glm::value_ptr(t));
 	//_shader.SetUniformMatrix4fv("projection",mat2.toArray);
 
 	glBindVertexArray(0);

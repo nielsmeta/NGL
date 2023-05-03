@@ -62,7 +62,7 @@ void App::InitApp(int w, int h)
 	while (!glfwWindowShouldClose(window)) {
 		ProcessInput(window);
 		glClearColor(0, 1, 1, 0);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 		this->Render();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
